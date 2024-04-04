@@ -2,14 +2,14 @@ def call() {
     pipeline {
         agent any
 
+        parameters {
+            string(name: 'ENV', defaultValue: '', description: 'Which Environment?')
+        }
+
         options {
             ansiColor('xterm')
         }
 
-
-        parameters {
-            string(name: 'ENV', defaultValue: '', description: 'Which Environment?')
-        }
 
         stages {
 
