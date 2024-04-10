@@ -9,7 +9,6 @@ def call() {
 
             stage('Compile/Build') {
                 steps {
-                    mail bcc: '', body: 'test', cc: '', from: 'saimaheshgundu@gmail.com', replyTo: '', subject: 'test', to: 'saimaheshgundu@gmail.com'
                     script {
                         common.compile()
                     }
@@ -30,8 +29,14 @@ def call() {
                     }
                 }
             }
-
         }
+
+        post {
+            failure {
+                mail body: '${component} - PipeLine Failed \n ${BUILD_URL}', from: 'saimaheshgundu@gmail.com', subject: '${component} - pipeline failed', to: 'saimaheshgundu@gmail.com'
+            }
+        }
+
     }
 }
 
