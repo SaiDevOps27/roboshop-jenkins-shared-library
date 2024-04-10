@@ -9,6 +9,7 @@ def call() {
 
             stage('Compile/Build') {
                 steps {
+                    sh 'env'
                     script {
                         common.compile()
                     }
@@ -39,4 +40,5 @@ def call() {
 
     }
 }
+
 
