@@ -4,10 +4,13 @@ def call() {
     }
     if (env.TAG_NAME ==~ ".*") {
         env.GTAG = "true"
+    } else {
+        env.GTAG = "false"
     }
     node('workstation') {
 
         try {
+
             stage('Check out Code') {
                 cleanWs()
                 git branch: 'main', url: 'https://github.com/SaiDevOps27/cart.git'
@@ -20,7 +23,11 @@ def call() {
                     common.compile()
                 }
             }
-            if (env.GTAG != "true") {
+
+            println GTAG
+            println BRANCH_NAME
+
+            if (env.GTAG != "true" && env.BRANCH_NAME != "main") {
                 stage('Test Cases') {
                     common.testcases()
                 }
