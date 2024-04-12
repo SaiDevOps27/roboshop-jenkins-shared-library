@@ -38,9 +38,20 @@ def call() {
                     common.codequality()
                 }
             }
+
+            if (env.GTAG == "true") {
+                stage('Package') {
+                    common.testcases()
+                }
+                stage('Artifact Upload') {
+                    common.testcases()
+                }
+            }
         }
         catch(e) {
             mail body: "<h1>${component} - PipeLine Failed \n ${BUILD_URL}<h1>", from: 'saimaheshgundu@gmail.com', subject: "${component} - pipeline failed", to: 'saimaheshgundu@gmail.com', mimeType: 'text/html'
         }
     }
 }
+
+
