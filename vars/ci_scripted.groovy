@@ -6,8 +6,11 @@ def call() {
 
         try {
             stage('Check out Code') {
+                sh 'ls -l'
                 cleanWs()
+                sh 'ls -l'
                 git branch: 'main', url: 'https://github.com/SaiDevOps27/cart.git'
+                sh 'ls -l'
             }
 
             sh 'env'
@@ -26,7 +29,8 @@ def call() {
                     common.codequality()
                 }
 
-        } catch(e) {
+        }
+        catch(e) {
             mail body: "<h1>${component} - PipeLine Failed \n ${BUILD_URL}<h1>", from: 'saimaheshgundu@gmail.com', subject: "${component} - pipeline failed", to: 'saimaheshgundu@gmail.com', mimeType: 'text/html'
         }
     }
