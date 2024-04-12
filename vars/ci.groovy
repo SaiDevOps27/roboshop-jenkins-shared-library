@@ -13,7 +13,7 @@ def call() {
 
             stage('Check out Code') {
                 cleanWs()
-                git branch: 'main', url: 'https://github.com/SaiDevOps27/${component}.git'
+                git branch: 'main', url: "https://github.com/SaiDevOps27/${component}.git"
             }
 
             sh 'env'
