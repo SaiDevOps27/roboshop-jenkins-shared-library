@@ -15,20 +15,19 @@ def call() {
 
             sh 'env'
 
-            if(env.BRANCH_NAME != main) {
+            if (env.BRANCH_NAME != main) {
                 stage('Build/Compile') {
                     common.compile()
                 }
             }
 
             stage('Test Cases') {
-                    common.testcases()
-                }
+                common.testcases()
+            }
 
             stage('Code Quality') {
-                    common.codequality()
-                }
-
+                common.codequality()
+            }
         }
         catch(e) {
             mail body: "<h1>${component} - PipeLine Failed \n ${BUILD_URL}<h1>", from: 'saimaheshgundu@gmail.com', subject: "${component} - pipeline failed", to: 'saimaheshgundu@gmail.com', mimeType: 'text/html'
