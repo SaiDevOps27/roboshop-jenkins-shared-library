@@ -18,7 +18,7 @@ def call() {
 
             sh 'env'
 
-            if (env.BRANCH_NAME != main) {
+            if (env.BRANCH_NAME != "main") {
                 stage('Build/Compile') {
                     common.compile()
                 }
