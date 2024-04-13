@@ -3,7 +3,7 @@ def compile() {
         sh 'npm install'
     }
     if (app_lang == "maven") {
-        sh 'mvn package'
+        sh 'mvn package ; mv target/${component}-1.0.jar ${component}.jar'
     }
 }
 
@@ -24,15 +24,17 @@ def codequality() {
 
 def prepareArtifacts() {
     sh 'echo ${TAG_NAME} >VERSION'
-    if (app_lang == "nodejs" || app_lang == "angular") {
+    if (app_lang == "maven") {
+        sh 'zip -r ${component}-${TAG_NAME}.zip ${component}.jar VERSION'
+    } else {
         sh 'zip -r ${component}-${TAG_NAME}.zip * -x Jenkinsfile'
     }
 }
 
 def artifactUpload() {
     sh 'echo ${TAG_NAME} >VERSION'
-    if (app_lang == "nodejs" || app_lang == "angular") {
+    //if (app_lang == "nodejs" || app_lang == "angular") {
         sh 'curl -v -u admin:admin123 --upload-file ${component}-${TAG_NAME}.zip http://172.31.46.228:8081/repository/${component}/${component}-${TAG_NAME}.zip'
-    }
+    //}
 }
 
