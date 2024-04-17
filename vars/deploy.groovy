@@ -8,9 +8,9 @@ def call () {
 
 
         parameters {
-            string(name: 'app_version', defaultValue: 'Mr Jenkins', description: 'App Version')
-            string(name: 'component', defaultValue: 'Mr Jenkins', description: 'Component')
-            string(name: 'environment', defaultValue: 'Mr Jenkins', description: 'Environment')
+            string(name: 'app_version', defaultValue: '', description: 'App Version')
+            string(name: 'component', defaultValue: '', description: 'Component')
+            string(name: 'environment', defaultValue: '', description: 'Environment')
         }
 
         stages {
