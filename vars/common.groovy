@@ -23,18 +23,24 @@ def codequality() {
 }
 
 def prepareArtifacts() {
-    sh 'echo ${TAG_NAME} >VERSION'
-    if (app_lang == "maven") {
-        sh 'zip -r ${component}-${TAG_NAME}.zip ${component}.jar schema VERSION'
-    } else {
-        sh 'zip -r ${component}-${TAG_NAME}.zip * -x Jenkinsfile'
-    }
+//    sh 'echo ${TAG_NAME} >VERSION'
+//    if (app_lang == "maven") {
+//        sh 'zip -r ${component}-${TAG_NAME}.zip ${component}.jar schema VERSION'
+//    } else {
+//        sh 'zip -r ${component}-${TAG_NAME}.zip * -x Jenkinsfile'
+//    }
+
+      sh 'docker build -t 792438259559.dkr.ecr.us-east-1.amazonaws.com/${component}:${TAG_NAME} .'
 }
 
+
 def artifactUpload() {
-    sh 'echo ${TAG_NAME} >VERSION'
-    //if (app_lang == "nodejs" || app_lang == "angular") {
-        sh 'curl -v -u admin:admin123 --upload-file ${component}-${TAG_NAME}.zip http://172.31.46.228:8081/repository/${component}/${component}-${TAG_NAME}.zip'
-    //}
+//    sh 'echo ${TAG_NAME} >VERSION'
+//    //if (app_lang == "nodejs" || app_lang == "angular") {
+//        sh 'curl -v -u admin:admin123 --upload-file ${component}-${TAG_NAME}.zip http://172.31.46.228:8081/repository/${component}/${component}-${TAG_NAME}.zip'
+//    //}
+
+    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 792438259559.dkr.ecr.us-east-1.amazonaws.com'
+    sh 'docker push 792438259559.dkr.ecr.us-east-1.amazonaws.com/${component}:${TAG_NAME}'
 }
 
